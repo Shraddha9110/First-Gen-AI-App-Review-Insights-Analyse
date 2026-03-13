@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface AnalysisResult {
   themes: string[];
@@ -105,8 +105,8 @@ export default function Home() {
               <div
                 key={step}
                 className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-all duration-500 ${statusStep > idx
-                    ? "bg-[#143c2c] text-[#4ade80] border border-[#22c55e]/20"
-                    : "bg-[#0f172a] text-[#475569] border border-transparent"
+                  ? "bg-[#143c2c] text-[#4ade80] border border-[#22c55e]/20"
+                  : "bg-[#0f172a] text-[#475569] border border-transparent"
                   }`}
               >
                 {step}
