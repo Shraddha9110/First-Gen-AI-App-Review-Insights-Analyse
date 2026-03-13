@@ -5,6 +5,7 @@ google-generativeai
 groq
 python-dotenv
 streamlit
+altair<5
 fpdf
 requests
 python-multipart
