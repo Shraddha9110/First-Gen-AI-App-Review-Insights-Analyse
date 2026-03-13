@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from backend.processor import ReviewProcessor
-from backend.gemini_client import GeminiClient
+from backend.llm_client import GroqClient
 
 # Page Config
 st.set_page_config(page_title="INDmoney Weekly Pulse | Managed Backend", page_icon="📊", layout="wide")
@@ -56,10 +56,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 def send_email_logic(analysis, recipient_email, recipient_name):
-    smtp_host = os.getenv("SMTP_HOST")
-    smtp_port = os.getenv("SMTP_PORT")
-    smtp_user = os.getenv("SMTP_USER")
-    smtp_pass = os.getenv("SMTP_PASS")
+    smtp_host = st.secrets.get("SMTP_HOST", os.getenv("SMTP_HOST"))
+    smtp_port = st.secrets.get("SMTP_PORT", os.getenv("SMTP_PORT"))
+    smtp_user = st.secrets.get("SMTP_USER", os.getenv("SMTP_USER"))
+    smtp_pass = st.secrets.get("SMTP_PASS", os.getenv("SMTP_PASS"))
 
     if not all([smtp_host, smtp_port, smtp_user, smtp_pass]):
         st.error("❌ SMTP credentials missing in environment/secrets.")
@@ -112,7 +112,7 @@ with st.sidebar:
     st.title("Admin Panel")
     st.info("Managed Backend for INDmoney Weekly Pulse")
     
-    api_key = st.text_input("Gemini API Key", type="password", value=os.getenv("GEMINI_API_KEY", ""))
+    api_key = st.text_input("Groq API Key", type="password", value=st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", "")))
     
     st.markdown("---")
     weeks = st.slider("Weeks of reviews", 4, 12, 8)
@@ -151,7 +151,7 @@ with tab1:
                         
                         reviews = reviews[:max_reviews]
                         
-                        llm = GeminiClient(api_key=api_key)
+                        llm = GroqClient(api_key=api_key)
                         analysis = llm.analyze_reviews(reviews)
                         
                         st.session_state['last_analysis'] = analysis
