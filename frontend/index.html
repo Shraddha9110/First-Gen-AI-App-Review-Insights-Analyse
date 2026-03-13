@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Insights Analyzer | Weekly Pulse</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Weekly Pulse</h1>
+            <p class="subtitle">Turn app reviews into actionable insights with Gemini LLM</p>
+        </header>
+
+        <section id="upload" class="glass-card upload-section" onclick="document.getElementById('fileInput').click()">
+            <div id="uploadContent">
+                <p>Click or drag to upload App Store / Play Store reviews</p>
+                <small>(CSV or JSON exports only)</small>
+                <input type="file" id="fileInput" accept=".csv,.json">
+            </div>
+            <div id="loading" class="loader"></div>
+        </section>
+
+        <div id="apiKeySection" class="glass-card" style="margin-top: -1rem; padding: 1rem;">
+            <input type="password" id="apiKey" placeholder="Enter Gemini API Key"
+                style="width: 100%; background: transparent; border: 1px solid var(--glass-border); color: white; padding: 0.5rem; border-radius: 0.5rem;">
+        </div>
+
+        <main id="resultsGrid" class="results-grid">
+            <div class="glass-card">
+                <h3>Top Themes</h3>
+                <div id="themesList" style="margin-top: 1rem;"></div>
+            </div>
+
+            <div class="glass-card">
+                <h3>User Quotes</h3>
+                <div id="quotesList"></div>
+            </div>
+
+            <div class="glass-card">
+                <h3>Action Ideas</h3>
+                <ul id="actionsList" style="margin-top: 1rem; list-style-type: none; padding-left: 0;"></ul>
+            </div>
+
+            <div class="glass-card" style="grid-column: 1 / -1; text-align: center;">
+                <h3>Weekly Action Center</h3>
+                <p id="summaryText" style="margin-top: 1rem; color: var(--text-muted);"></p>
+                <div
+                    style="margin-top: 1.5rem; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <input type="text" id="recipientName" placeholder="Recipient's Name (e.g., Jane)"
+                        style="width: 100%; background: transparent; border: 1px solid var(--glass-border); color: white; padding: 0.75rem; border-radius: 0.5rem;">
+                    <input type="email" id="recipientEmail" placeholder="Recipient's Email Address"
+                        style="width: 100%; background: transparent; border: 1px solid var(--glass-border); color: white; padding: 0.75rem; border-radius: 0.5rem;">
+                </div>
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+                    <button id="generateBtn" class="btn" onclick="exportReport()">📄 Generate One-Pager</button>
+                    <button id="emailBtn" class="btn" style="background: var(--success);" onclick="sendEmail()">📧 Send
+                        Draft Email</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
