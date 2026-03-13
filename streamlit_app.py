@@ -116,7 +116,7 @@ with st.sidebar:
     
     st.markdown("---")
     weeks = st.slider("Weeks of reviews", 4, 12, 8)
-    max_reviews = st.number_input("Max reviews to fetch", 10, 1000, 200)
+    max_reviews = st.number_input("Max reviews to fetch", 10, 1000, 50)
 
 # Main UI
 st.title("INDmoney Weekly Pulse")
