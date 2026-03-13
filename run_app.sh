@@ -8,19 +8,20 @@ echo "🚀 Starting INDMoney Insights Analyzer..."
 
 # Start Backend
 echo "📡 Starting FastAPI Backend on port 8000..."
-python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload > backend.log 2>&1 &
+mkdir -p logs
+python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload > logs/backend.log 2>&1 &
 BE_PID=$!
 
 # Start Frontend
 echo "🎨 Starting Next.js Frontend on port 3000..."
 cd web
 export PATH="$PWD/../node-bin/bin:$PATH"
-npm run dev > ../frontend.log 2>&1 &
+npm run dev > ../logs/frontend.log 2>&1 &
 FE_PID=$!
 
 # Start Scheduler
 echo "🚀 Starting Weekly Scheduler..."
-python3 scripts/automated_scheduler.py > scheduler.log 2>&1 &
+python3 ../scripts/automated_scheduler.py > ../logs/scheduler_process.log 2>&1 &
 SCHEDULER_PID=$!
 
 echo "✅ Backend, Frontend, and Scheduler are running!"
