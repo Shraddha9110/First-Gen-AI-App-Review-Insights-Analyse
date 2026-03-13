@@ -43,7 +43,7 @@ def run_weekly_pulse():
         response = requests.post(f"{BACKEND_URL}/run-pipeline", json=payload)
         
         if response.status_code != 200:
-            logging.error(f"Pipeline failed: {response.text}")
+            logging.error(f"❌ Pipeline failed — email NOT sent. Reason: {response.text}")
             return
             
         results = response.json()

@@ -78,12 +78,10 @@ class GeminiClient:
                         groq_llm = GroqClient()
                         return groq_llm.analyze_reviews(reviews)
                     except Exception as fallback_err:
-                        return {
-                            "themes": ["Fallback error"],
-                            "quotes": ["Error switching to Groq"],
-                            "actions": [f"Gemini 429 -> Groq Error: {str(fallback_err)}"],
-                            "summary": f"Dual LLM failure: Gemini (429) and Groq ({str(fallback_err)})"
-                        }
+                        raise RuntimeError(
+                            f"Both LLMs are rate-limited. Gemini: 429. Groq: {str(fallback_err)}. "
+                            f"Please wait and try again later."
+                        )
             break
         
         try:
