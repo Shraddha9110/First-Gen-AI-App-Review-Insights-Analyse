@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from backend.processor import ReviewProcessor
-from backend.llm_client import GroqClient
+from backend.gemini_client import GeminiClient
 
 # Page Config
 st.set_page_config(page_title="INDmoney Weekly Pulse | Managed Backend", page_icon="📊", layout="wide")
@@ -112,7 +112,7 @@ with st.sidebar:
     st.title("Admin Panel")
     st.info("Managed Backend for INDmoney Weekly Pulse")
     
-    api_key = st.text_input("Groq API Key", type="password", value=st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", "")))
+    api_key = st.text_input("Gemini API Key", type="password", value=st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY", "")))
     
     st.markdown("---")
     weeks = st.slider("Weeks of reviews", 4, 12, 8)
@@ -151,7 +151,7 @@ with tab1:
                         
                         reviews = reviews[:max_reviews]
                         
-                        llm = GroqClient(api_key=api_key)
+                        llm = GeminiClient(api_key=api_key)
                         analysis = llm.analyze_reviews(reviews)
                         
                         st.session_state['last_analysis'] = analysis
