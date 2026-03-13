@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+google-generativeai
+groq
+python-dotenv
+streamlit
+fpdf
+requests
+python-multipart
+schedule
