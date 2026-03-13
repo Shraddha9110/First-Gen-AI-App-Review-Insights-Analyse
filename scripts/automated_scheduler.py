@@ -36,10 +36,10 @@ def run_weekly_pulse():
         # 1. Run Pipeline (8 weeks, 200 reviews)
         payload = {
             "weeks": 8,
-            "max_reviews": 200,
+            "max_reviews": 50,
             "api_key": os.getenv("GEMINI_API_KEY")
         }
-        logging.info("Triggering pipeline for last 8 weeks, max 200 reviews...")
+        logging.info("Triggering pipeline for last 8 weeks, max 50 reviews...")
         response = requests.post(f"{BACKEND_URL}/run-pipeline", json=payload)
         
         if response.status_code != 200:
@@ -65,16 +65,13 @@ def run_weekly_pulse():
     except Exception as e:
         logging.exception(f"Error during scheduled task: {e}")
 
-# Schedule the task every 5 minutes
-schedule.every(5).minutes.do(run_weekly_pulse)
-
-# For verification/immediate run uncomment below
-# run_weekly_pulse()
+# Schedule the task every Sunday at 15:35 IST (10:05 UTC)
+schedule.every().sunday.at("10:05").do(run_weekly_pulse)
 
 logging.info("Automated Scheduler started.")
-logging.info("Frequency: Every 5 minutes")
+logging.info("Frequency: Every Sunday at 3:35 PM IST")
 logging.info(f"Recipient: {RECIPIENT_EMAIL}")
-logging.info("Constraints: 200 reviews, last 8 weeks")
+logging.info("Constraints: 50 reviews, last 8 weeks")
 
 while True:
     try:
