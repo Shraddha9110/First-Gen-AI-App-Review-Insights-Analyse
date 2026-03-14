@@ -19,12 +19,7 @@ export PATH="$PWD/../node-bin/bin:$PATH"
 npm run dev > ../logs/frontend.log 2>&1 &
 FE_PID=$!
 
-# Start Scheduler
-echo "🚀 Starting Weekly Scheduler..."
-python3 ../scripts/automated_scheduler.py > ../logs/scheduler_process.log 2>&1 &
-SCHEDULER_PID=$!
-
-echo "✅ Backend, Frontend, and Scheduler are running!"
+echo "✅ Backend and Frontend are running!"
 echo "   - Backend: http://localhost:8000"
 echo "   - Frontend: http://localhost:3000"
 echo ""
